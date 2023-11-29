@@ -24,6 +24,7 @@ class MyScene extends Phaser.Scene {
         this.player = player
         const player1 = this.physics.add.sprite(350, 300, 'jiro');
         this.player1 = player1
+        this.text1 = this.add.text(600, 400, 'MyWorld').setFontSize(32).setColor('#ffe')
     }
 
     arrow_move(cursors, object){
