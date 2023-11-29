@@ -15,7 +15,9 @@ class MyScene extends Phaser.Scene {
     create() {
          // 単体画像をシーンに追加(X座標,Y座標,画像名)
         this.add.image(400, 300, 'sky');
-        this.player = this.add.image(400, 300, 'taro');
+        const player = this.physics.add.sprite(400, 300, 'taro');
+        this.player = player
+        this.player.angle = 0;
         this.player_direction = 1;
     }
     
@@ -25,11 +27,9 @@ class MyScene extends Phaser.Scene {
         if (this.player.x <= 0 || this.player.y <= 0) this.player_direction = 1;
 
         if(this.player_direction == 1){
-            this.player.y += 5;
-            this.player.x += 5;
-        }else{
-            this.player.y -= 5;
-            this.player.x -= 5;
+            this.player.setVelocity(100, -100);
+            this.player.angle += 5;
+            this.player.setAngle( this.player.angle );
         }
     }
 
