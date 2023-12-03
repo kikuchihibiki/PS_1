@@ -24,38 +24,56 @@ class MyScene extends Phaser.Scene {
         this.player = player
         const player1 = this.physics.add.sprite(350, 300, 'jiro');
         this.player1 = player1
-        this.text1 = this.add.text(600, 400, 'MyWorld').setFontSize(32).setColor('#ffe')
+        this.text1 = this.add.text(600, 400, 'MyWorld').setFontSize(32).setColor('#ffe');
+        this.text2 = this.add.text(100, 50, "", { font: "32px Arial", fill: "#ffffff" });
+        // this.keys = this.input.keyboard.addKeys('A,S,D');
+        this.keys = {};
+        this.keys.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+        this.keys.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+        this.keys.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
     }
 
-    arrow_move(cursors, object){
+    // arrow_move(cursors, object){
     
-        if(cursors.left.isDown){
-            console.log("Left");
-            object.setVelocityX(-200);
+    //     if(cursors.left.isDown){
+    //         console.log("Left");
+    //         object.setVelocityX(-200);
     
     
-        }else if(cursors.right.isDown){
-            console.log("Right!!");
-            object.setVelocityX(200);
+    //     }else if(cursors.right.isDown){
+    //         console.log("Right!!");
+    //         object.setVelocityX(200);
     
-        }else{
-            object.setVelocity(0,0);
+    //     }else{
+    //         object.setVelocity(0,0);
+    //     }
+    // }
+
+    // arrow_move2(cursors, object){
+    
+    //     if(cursors.left.isDown){
+    //         console.log("Left");
+    //         object.setVelocityX(200);
+    
+    
+    //     }else if(cursors.right.isDown){
+    //         console.log("Right!!");
+    //         object.setVelocityX(-200);
+    
+    //     }else{
+    //         object.setVelocity(0,0);
+    //     }
+    // }
+
+    createText() {
+        if (this.keys.keyA.isDown) {
+            this.text2.setText("Hello");
         }
-    }
-
-    arrow_move2(cursors, object){
-    
-        if(cursors.left.isDown){
-            console.log("Left");
-            object.setVelocityX(200);
-    
-    
-        }else if(cursors.right.isDown){
-            console.log("Right!!");
-            object.setVelocityX(-200);
-    
-        }else{
-            object.setVelocity(0,0);
+        else if (this.keys.keyS.isDown) {
+            this.text2.setText("Hey");
+        }
+        else if (this.keys.keyD.isDown) {
+            this.text2.setText("");
         }
     }
     
@@ -70,8 +88,10 @@ class MyScene extends Phaser.Scene {
         //     this.player.setAngle( this.player.angle );
         // }
         let cursors = this.input.keyboard.createCursorKeys();
-        this.arrow_move(cursors, this.player);
-        this.arrow_move2(cursors, this.player1);
+        // this.arrow_move(cursors, this.player);
+        // this.arrow_move2(cursors, this.player1);
+        this.createText();
+        
     }
 
 }
