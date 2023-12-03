@@ -9,6 +9,7 @@ class MyScene extends Phaser.Scene {
         this.load.image('sky', 'assets/background.png');
         this.load.image('taro', 'assets/taro.png');
         this.load.image('jiro', 'assets/jiro.png');
+        this.load.image('hanako', 'assets/hanako.png');
     }
 
 
@@ -24,6 +25,11 @@ class MyScene extends Phaser.Scene {
         this.player = player
         const player1 = this.physics.add.sprite(350, 300, 'jiro');
         this.player1 = player1
+        const player2 = this.physics.add.sprite(100, 100, 'hanako');
+        this.player2 = player2
+        this.input.keyboard.on('keydown-W', function () {
+            player2.setX(Phaser.Math.Between(100, 400));
+        });
         this.text1 = this.add.text(600, 400, 'MyWorld').setFontSize(32).setColor('#ffe');
         this.text2 = this.add.text(100, 50, "", { font: "32px Arial", fill: "#ffffff" });
         // this.keys = this.input.keyboard.addKeys('A,S,D');
