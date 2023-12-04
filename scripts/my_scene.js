@@ -75,7 +75,7 @@ class MyScene extends Phaser.Scene {
     handleCollision(player, otherPlayer) {
         if (player.texture.key === 'taro' && otherPlayer.texture.key === 'hanako') {
           const text = this.add.text(100, 150, '痛い！', { font: '32px Meiryo', fill: '#ff0000' });
-            
+            otherPlayer.disableBody(true, true);
             this.time.delayedCall(3000, () => {
                 text.destroy();
             });
