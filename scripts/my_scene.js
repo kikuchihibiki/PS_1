@@ -76,9 +76,9 @@ class MyScene extends Phaser.Scene {
         if (player.texture.key === 'taro' && otherPlayer.texture.key === 'hanako') {
           const text = this.add.text(100, 150, '痛い！', { font: '32px Meiryo', fill: '#ff0000' });
             otherPlayer.disableBody(true, true);
-            this.time.delayedCall(3000, () => {
-                text.destroy();
-            });
+            this.time.delayedCall(50, () => {
+                this.scene.pause();
+            },[],this);
         }
     }
 
@@ -130,6 +130,7 @@ class MyScene extends Phaser.Scene {
             this.player2.setVisible(true);
             this.flag = false;
         }
+    
     }
 
 }
