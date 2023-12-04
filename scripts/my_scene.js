@@ -8,7 +8,7 @@ class MyScene extends Phaser.Scene {
          // 画像の読み込み(使用する時の名前, パス)
         this.load.image('sky', 'assets/background.png');
         this.load.image('taro', 'assets/taro.png');
-        this.load.image('jiro', 'assets/jiro.png');
+        // this.load.image('jiro', 'assets/jiro.png');
         this.load.image('hanako', 'assets/hanako.png');
     }
 
@@ -23,13 +23,23 @@ class MyScene extends Phaser.Scene {
         // this.player_direction = 1;
         const player = this.physics.add.sprite(400, 300, 'taro');
         this.player = player
-        const player1 = this.physics.add.sprite(350, 300, 'jiro');
-        this.player1 = player1
-        const player2 = this.physics.add.sprite(100, 100, 'hanako');
-        this.player2 = player2
-        this.input.keyboard.on('keydown-W', function () {
-            player2.setX(Phaser.Math.Between(100, 400));
+        this.player.angle = 0;
+        // const player1 = this.physics.add.sprite(350, 300, 'jiro');
+        // this.player1 = player1
+        this.player2 = this.physics.add.sprite(0, 0, 'hanako');
+        this.player2.setVisible(false);
+
+        this.flag = false;
+
+        this.time.delayedCall(3000, () => {
+            this.flag = true;
         });
+        this.players = this.physics.add.group();
+        this.players.add(this.player);
+        // this.players.add(this.player1);
+        this.players.add(this.player2);
+
+        this.physics.add.collider(this.players, this.players, this.handleCollision, null, this);
         this.text1 = this.add.text(600, 400, 'MyWorld').setFontSize(32).setColor('#ffe');
         this.text2 = this.add.text(100, 50, "", { font: "32px Arial", fill: "#ffffff" });
         // this.keys = this.input.keyboard.addKeys('A,S,D');
@@ -39,21 +49,38 @@ class MyScene extends Phaser.Scene {
         this.keys.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
     }
 
-    // arrow_move(cursors, object){
+    arrow_move(cursors, object){
+        if(cursors.up.isDown){
+            console.log("Up!!");
+            object.setVelocityY(-200);// 上方向の速度を設定
+            
+        }else if(cursors.down.isDown){
+            console.log("down!!");
+            object.setVelocityY(200);// 下方向の速度を設定
     
-    //     if(cursors.left.isDown){
-    //         console.log("Left");
-    //         object.setVelocityX(-200);
+        }else if(cursors.left.isDown){
+            console.log("Left");
+            object.setVelocityX(-200);
     
     
-    //     }else if(cursors.right.isDown){
-    //         console.log("Right!!");
-    //         object.setVelocityX(200);
+        }else if(cursors.right.isDown){
+            console.log("Right!!");
+            object.setVelocityX(200);
     
-    //     }else{
-    //         object.setVelocity(0,0);
-    //     }
-    // }
+        }else{
+            object.setVelocity(0,0);
+        }
+    }
+
+    handleCollision(player, otherPlayer) {
+        if (player.texture.key === 'taro' && otherPlayer.texture.key === 'hanako') {
+          const text = this.add.text(100, 150, '痛い！', { font: '32px Meiryo', fill: '#ff0000' });
+            
+            this.time.delayedCall(3000, () => {
+                text.destroy();
+            });
+        }
+    }
 
     // arrow_move2(cursors, object){
     
@@ -94,10 +121,15 @@ class MyScene extends Phaser.Scene {
         //     this.player.setAngle( this.player.angle );
         // }
         let cursors = this.input.keyboard.createCursorKeys();
-        // this.arrow_move(cursors, this.player);
+        this.arrow_move(cursors, this.player);
         // this.arrow_move2(cursors, this.player1);
         this.createText();
-        
+        if (this.flag) {
+            this.player2.x = Phaser.Math.Between(200, 400);
+            this.player2.y = Phaser.Math.Between(100, 200);
+            this.player2.setVisible(true);
+            this.flag = false;
+        }
     }
 
 }
